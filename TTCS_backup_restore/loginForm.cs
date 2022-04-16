@@ -14,7 +14,6 @@ namespace TTCS_backup_restore
 {
     public partial class loginForm : DevExpress.XtraEditors.XtraForm
     {
-        public static string connectionString = "server=";
         public loginForm()
         {
             InitializeComponent();
@@ -22,29 +21,21 @@ namespace TTCS_backup_restore
 
         private void loginOkBtnClicked(object sender, EventArgs e)
         {
-            connectionString = "server=";
-            connectionString += ";uid=" + loginNameTxt.Text;
-            connectionString += ";pwd=" + passwordTxt.Text;
-            bool isConnection = false;
-            try
-            {
-                SqlConnection con = new SqlConnection();
-                con.ConnectionString = connectionString;
-                con.Open();
-                isConnection = true;
-                con.Close();
-            }
-            catch (Exception ex)
-            {
-                passwordTxt.Text = "";
-                loginNameTxt.Focus();
-                MessageBox.Show(ex.Message);
-            }
-            if(isConnection)
+            DAO.serverName = serverNameTxt.Text;
+            DAO.userName = loginNameTxt.Text;
+            DAO.password = passwordTxt.Text;
+            int isConnection = DAO.connectionDB();
+            if (isConnection == 0)
             {
                 mainForm form = new mainForm();
                 this.Hide();
                 form.ShowDialog();
+            }
+            else
+            {
+                passwordTxt.Text = "";
+                loginNameTxt.Focus();
+                MessageBox.Show("Đăng nhập thất bại");
             }
         }
 

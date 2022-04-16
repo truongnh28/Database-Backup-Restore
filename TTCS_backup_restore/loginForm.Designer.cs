@@ -32,6 +32,7 @@ namespace TTCS_backup_restore
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.serverNameTxt = new System.Windows.Forms.TextBox();
             this.loginCancleBtn = new System.Windows.Forms.Button();
             this.loginOKBtn = new System.Windows.Forms.Button();
             this.passwordTxt = new System.Windows.Forms.TextBox();
@@ -42,7 +43,6 @@ namespace TTCS_backup_restore
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -72,7 +72,7 @@ namespace TTCS_backup_restore
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.serverNameTxt);
             this.panel1.Controls.Add(this.loginCancleBtn);
             this.panel1.Controls.Add(this.loginOKBtn);
             this.panel1.Controls.Add(this.passwordTxt);
@@ -84,6 +84,15 @@ namespace TTCS_backup_restore
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(435, 302);
             this.panel1.TabIndex = 4;
+            // 
+            // serverNameTxt
+            // 
+            this.serverNameTxt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverNameTxt.Location = new System.Drawing.Point(173, 28);
+            this.serverNameTxt.Name = "serverNameTxt";
+            this.serverNameTxt.Size = new System.Drawing.Size(210, 26);
+            this.serverNameTxt.TabIndex = 8;
+            this.serverNameTxt.Text = "NHTRUONG";
             // 
             // loginCancleBtn
             // 
@@ -186,15 +195,6 @@ namespace TTCS_backup_restore
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(173, 28);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(210, 26);
-            this.textBox1.TabIndex = 8;
-            this.textBox1.Text = "NHTRUONG";
-            // 
             // loginForm
             // 
             this.Appearance.BackColor = System.Drawing.Color.White;
@@ -234,6 +234,6 @@ namespace TTCS_backup_restore
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button loginCancleBtn;
         private System.Windows.Forms.Button loginOKBtn;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox serverNameTxt;
     }
 }
