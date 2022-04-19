@@ -355,7 +355,7 @@ namespace TTCS_backup_restore {
             
             private global::System.Data.DataColumn columnThời_gian_sao_lưu;
             
-            private global::System.Data.DataColumn columnUser_name;
+            private global::System.Data.DataColumn columnUser_sao_lưu;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -416,9 +416,9 @@ namespace TTCS_backup_restore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn User_nameColumn {
+            public global::System.Data.DataColumn User_sao_lưuColumn {
                 get {
-                    return this.columnUser_name;
+                    return this.columnUser_sao_lưu;
                 }
             }
             
@@ -459,13 +459,13 @@ namespace TTCS_backup_restore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public backupSetTableRow AddbackupSetTableRow(int Thứ_tự_bản_sao_lưu, string Mô_tả, System.DateTime Thời_gian_sao_lưu, string User_name) {
+            public backupSetTableRow AddbackupSetTableRow(int Thứ_tự_bản_sao_lưu, string Mô_tả, string Thời_gian_sao_lưu, string User_sao_lưu) {
                 backupSetTableRow rowbackupSetTableRow = ((backupSetTableRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Thứ_tự_bản_sao_lưu,
                         Mô_tả,
                         Thời_gian_sao_lưu,
-                        User_name};
+                        User_sao_lưu};
                 rowbackupSetTableRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowbackupSetTableRow);
                 return rowbackupSetTableRow;
@@ -491,7 +491,7 @@ namespace TTCS_backup_restore {
                 this.columnThứ_tự_bản_sao_lưu = base.Columns["Thứ tự bản sao lưu"];
                 this.columnMô_tả = base.Columns["Mô tả"];
                 this.columnThời_gian_sao_lưu = base.Columns["Thời gian sao lưu"];
-                this.columnUser_name = base.Columns["User name"];
+                this.columnUser_sao_lưu = base.Columns["User sao lưu"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -501,16 +501,18 @@ namespace TTCS_backup_restore {
                 base.Columns.Add(this.columnThứ_tự_bản_sao_lưu);
                 this.columnMô_tả = new global::System.Data.DataColumn("Mô tả", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMô_tả);
-                this.columnThời_gian_sao_lưu = new global::System.Data.DataColumn("Thời gian sao lưu", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                this.columnThời_gian_sao_lưu = new global::System.Data.DataColumn("Thời gian sao lưu", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnThời_gian_sao_lưu);
-                this.columnUser_name = new global::System.Data.DataColumn("User name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnUser_name);
+                this.columnUser_sao_lưu = new global::System.Data.DataColumn("User sao lưu", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUser_sao_lưu);
                 this.columnThứ_tự_bản_sao_lưu.Caption = "position";
                 this.columnMô_tả.Caption = "name";
                 this.columnMô_tả.MaxLength = 128;
-                this.columnThời_gian_sao_lưu.Caption = "backup_start_date";
-                this.columnUser_name.Caption = "user_name";
-                this.columnUser_name.MaxLength = 128;
+                this.columnThời_gian_sao_lưu.Caption = "user_name";
+                this.columnThời_gian_sao_lưu.MaxLength = 128;
+                this.columnUser_sao_lưu.ReadOnly = true;
+                this.columnUser_sao_lưu.Caption = "Column1";
+                this.columnUser_sao_lưu.MaxLength = 4000;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1183,10 +1185,10 @@ namespace TTCS_backup_restore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public System.DateTime Thời_gian_sao_lưu {
+            public string Thời_gian_sao_lưu {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tablebackupSetTable.Thời_gian_sao_lưuColumn]));
+                        return ((string)(this[this.tablebackupSetTable.Thời_gian_sao_lưuColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'Thời gian sao lưu\' in table \'backupSetTable\' is DBNull.", e);
@@ -1199,17 +1201,17 @@ namespace TTCS_backup_restore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string User_name {
+            public string User_sao_lưu {
                 get {
                     try {
-                        return ((string)(this[this.tablebackupSetTable.User_nameColumn]));
+                        return ((string)(this[this.tablebackupSetTable.User_sao_lưuColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'User name\' in table \'backupSetTable\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'User sao lưu\' in table \'backupSetTable\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablebackupSetTable.User_nameColumn] = value;
+                    this[this.tablebackupSetTable.User_sao_lưuColumn] = value;
                 }
             }
             
@@ -1251,14 +1253,14 @@ namespace TTCS_backup_restore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsUser_nameNull() {
-                return this.IsNull(this.tablebackupSetTable.User_nameColumn);
+            public bool IsUser_sao_lưuNull() {
+                return this.IsNull(this.tablebackupSetTable.User_sao_lưuColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetUser_nameNull() {
-                this[this.tablebackupSetTable.User_nameColumn] = global::System.Convert.DBNull;
+            public void SetUser_sao_lưuNull() {
+                this[this.tablebackupSetTable.User_sao_lưuColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1543,8 +1545,8 @@ namespace TTCS_backup_restore.DSTableAdapters {
             tableMapping.DataSetTable = "backupSetTable";
             tableMapping.ColumnMappings.Add("position", "Thứ tự bản sao lưu");
             tableMapping.ColumnMappings.Add("name", "Mô tả");
-            tableMapping.ColumnMappings.Add("backup_start_date", "Thời gian sao lưu");
-            tableMapping.ColumnMappings.Add("user_name", "User name");
+            tableMapping.ColumnMappings.Add("user_name", "Thời gian sao lưu");
+            tableMapping.ColumnMappings.Add("Column1", "User sao lưu");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1561,18 +1563,17 @@ namespace TTCS_backup_restore.DSTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT position, name, backup_start_date , user_name
-FROM  msdb.dbo.backupset 
-WHERE     database_name = @db_name AND type='D' AND 
-    backup_set_id >= 
-    (SELECT backup_set_id FROM 	msdb.dbo.backupset
-        WHERE position = 1 AND database_name = @db_name AND type='D'
-            AND backup_finish_date = 
-		(SELECT  MAX(backup_finish_date ) 
-			FROM msdb.dbo.backupset  
-                WHERE database_name = @db_name AND type='D' AND position = 1
-                ) 
-        ) 
+            this._commandCollection[0].CommandText = @"SELECT position, name, FORMAT(CONVERT(DATETIME, backup_finish_date, 108),'dd-MM-yyyy HH:mm:ss','en-us'), user_name
+FROM msdb.dbo.backupset 
+WHERE database_name = @db_name AND type = 'D' AND backup_set_id >= (
+	SELECT backup_set_id
+	FROM msdb.dbo.backupset	
+	WHERE database_name = @db_name AND backup_finish_date = (
+		SELECT MAX(backup_finish_date)
+		FROM msdb.dbo.backupset
+		WHERE position = 1 AND database_name = @db_name
+		) 
+	)
 ORDER BY position DESC";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@db_name", global::System.Data.SqlDbType.NVarChar, 128, global::System.Data.ParameterDirection.Input, 0, 0, "database_name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));

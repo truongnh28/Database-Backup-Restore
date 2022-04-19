@@ -22,6 +22,8 @@ namespace TTCS_backup_restore
         {
             InitializeComponent();
             tabPageTest();
+            chonGio.Value = DateTime.Today;
+            chonNgay.Value = DateTime.Today;
             nameServerListTabcontrol.SelectedIndexChanged += new EventHandler(Tabs_SelectedIndexChanged);
         }
         public static ArrayList GetDatabaseNames()
@@ -125,22 +127,13 @@ namespace TTCS_backup_restore
             bool haveDevice = haveDevices(nameServerListTabcontrol.SelectedTab.Text);
             taoDeviceBtn.Enabled = !haveDevice;
             saoLuuBtn.Enabled = haveDevice;
-            phucHoiBtn.Enabled = (rowSelected > -1);
             thamSoPhucHoiBtn.Enabled = haveDevice;
+            phucHoiBtn.Enabled = thamSoPhucHoiCheckbox.Checked || (rowSelected > -1);
             delBackupSetItemBtn.Enabled = (rowSelected > -1);
             dataBackupSetTable.DataSource = backupSetTableAdapter.GetBackupSetTable(nameServerListTabcontrol.SelectedTab.Text);
-            //dataBackupSetTable.DataSource = DS.(nameServerListTabcontrol.SelectedTab.Text);
             if (dataBackupSetTable.Rows.GetRowCount(DataGridViewElementStates.None) > 0)
             {
                 dataBackupSetTable.Rows[0].Selected = false;
-            }
-            if(rowSelected != -1)
-            {
-                nameDBTxt.Text = rowSelected.ToString();
-            } 
-            else
-            {
-                nameDBTxt.Text = nameServerListTabcontrol.SelectedTab.Text;
             }
         }
 
@@ -151,17 +144,16 @@ namespace TTCS_backup_restore
 
         private void taoDeviceBtn_Click(object sender, EventArgs e)
         {
-            //DAO.taoDevice(nameServerListTabcontrol.SelectedTab.Text);
             string devicePath = $"D:\\TTCS_BACKUP\\DEVICE_{nameServerListTabcontrol.SelectedTab.Text}.bak";
             string query = $"EXEC SP_ADDUMPDEVICE 'DISK', 'DEVICE_{nameServerListTabcontrol.SelectedTab.Text}', '{devicePath}'";
             int err = DAO.execSqlNonQuery(query, DAO.connectionString);
             if(err == 0)
             {
-                MessageBox.Show("Tạo device thành công");
+                MessageBox.Show("Tạo Device thành công");
             }
             else
             {
-                MessageBox.Show("Tạo device không thành công");
+                MessageBox.Show("Tạo Device không thành công");
             }
             mainProcess();
         }
@@ -169,18 +161,43 @@ namespace TTCS_backup_restore
         private void thamSoPhucHoiBtn_Click(object sender, EventArgs e)
         {
             thamSoPhucHoiCheckbox.Checked = !thamSoPhucHoiCheckbox.Checked;
+            mainProcess();
         }
 
+        private string getMaxPositionBackupLog()
+        {
+            string query = $@"SELECT MAX(position)
+                            FROM msdb.dbo.backupset 
+                            WHERE database_name = '{nameServerListTabcontrol.SelectedTab.Text}' AND type = 'L' AND backup_set_id >= (
+	                            SELECT backup_set_id
+	                            FROM msdb.dbo.backupset	
+	                            WHERE database_name = '{nameServerListTabcontrol.SelectedTab.Text}' AND backup_finish_date = (
+		                            SELECT MAX(backup_finish_date)
+		                            FROM msdb.dbo.backupset
+		                            WHERE position = 1 AND database_name = '{nameServerListTabcontrol.SelectedTab.Text}'
+		                            ) 
+	                            )";
+            SqlDataReader dataReader = DAO.execSqlDataReader(query, DAO.connectionString);
+            string ans = "";
+            if(dataReader.HasRows)
+            {
+                while (dataReader.Read())
+                {
+                    ans = dataReader[0].ToString();
+                }
+            }
+            return ans;
+        }
         private void phucHoiBtn_Click(object sender, EventArgs e)
         {
-            // Đóng kết nối của chính ta
+            // Ngắt kết nối của chính ta
             if (DAO.con != null && DAO.con.State == ConnectionState.Open) DAO.con.Close();
             string query = $@"ALTER DATABASE {nameServerListTabcontrol.SelectedTab.Text} SET SINGLE_USER WITH ROLLBACK IMMEDIATE 
                                 USE tempdb ";
             if (thamSoPhucHoiCheckbox.Checked == false)
             {
                 query += $@"
-                            RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = 2, REPLACE
+                            RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {dataBackupSetTable.Rows[rowSelected].Cells[0].Value}, REPLACE
                             ALTER DATABASE {nameServerListTabcontrol.SelectedTab.Text} SET MULTI_USER";
                 int err = DAO.execSqlNonQuery(query, DAO.connectionString);
                 if(err == 0)
@@ -189,31 +206,46 @@ namespace TTCS_backup_restore
                 }
                 else
                 {
-                    MessageBox.Show("Phục hồi thất bại");
+                    MessageBox.Show("Phục hồi không thành công");
                 }
             }
             else
             {
-                // thời gian sao lưu tối thiểu 3p
-                nameDBTxt.Text = chonNgay.Value.ToString("yyyy-MM-dd");
-                nameDBTxt.Text = chonGio.Value.ToString("HH:mm:ss");
+                // thá»i gian sao lÆ°u tá»‘i thiá»ƒu 3p
+                string backupDate = chonNgay.Value.ToString("yyyy-MM-dd");
+                string backupTime = chonGio.Value.ToString("HH:mm:ss");
+                var backupFullMaxPosition = dataBackupSetTable.Rows[0].Cells[3].Value;
+                var backupLogMaxPosition = getMaxPositionBackupLog();
+                DateTime checkDay = DateTime.ParseExact(dataBackupSetTable.Rows[dataBackupSetTable.Rows.Count - 1].Cells[3].Value.ToString(), "dd-MM-yyyy HH:mm:ss", null);
+                DateTime backupDay = chonNgay.Value;
+                //nameDBTxt.Text = checkDay <= backupDay ? "YES" : "NO";
+                nameDBTxt.Text = checkDay.ToString();
+                test.Text = backupDate.ToString();
+                //query += $@"
+                //            BACKUP LOG {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH NORECOVERY
+                //            RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupFullMaxPosition}, NORECOVERY
+                //            RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupLogMaxPosition}, STOPAT = '{backupDate} {backupTime}', RECOVERY 
+                //            ALTER DATABASE {nameServerListTabcontrol.SelectedTab.Text} SET MULTI_USER";
+                //int err = DAO.execSqlNonQuery(query, DAO.connectionString);
+                //if (err == 0)
+                //{
+                //    MessageBox.Show("Phục hồi thành công");
+                //}
+                //else
+                //{
+                //    MessageBox.Show(DAO.errstr);
+                //}
             }
         }
 
         private void dataBackupSetTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //MessageBox.Show("Mouse clicked in the datagridview!");
             rowSelected = e.RowIndex > -1 ? e.RowIndex : -1;
             mainProcess();
             if(e.RowIndex != -1)
             {
                 dataBackupSetTable.Rows[e.RowIndex].Selected = true;
             }
-        }
-
-        private void dataBackupSetTable_CellClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            
         }
 
         private void dataBackupSetTable_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
@@ -223,9 +255,7 @@ namespace TTCS_backup_restore
 
         private void mainForm_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'dS.nameDatabaseTable' table. You can move, or remove it, as needed.
             this.nameDatabaseTableAdapter.Fill(this.dS.nameDatabaseTable);
-
         }
     }
 }
