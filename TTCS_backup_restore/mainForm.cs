@@ -188,6 +188,10 @@ namespace TTCS_backup_restore
             }
             return ans;
         }
+        private bool checkDate(DateTime backupDate, DateTime restoreDate)
+        {
+            return backupDate <= restoreDate;
+        }
         private void phucHoiBtn_Click(object sender, EventArgs e)
         {
             // Ngắt kết nối của chính ta
@@ -197,7 +201,7 @@ namespace TTCS_backup_restore
             if (thamSoPhucHoiCheckbox.Checked == false)
             {
                 query += $@"
-                            RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {dataBackupSetTable.Rows[rowSelected].Cells[0].Value}, REPLACE
+                            RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {dataBackupSetTable.Rows[rowSelected].Cells[0].Value}, REPLACE, RECOVERY 
                             ALTER DATABASE {nameServerListTabcontrol.SelectedTab.Text} SET MULTI_USER";
                 int err = DAO.execSqlNonQuery(query, DAO.connectionString);
                 if(err == 0)
@@ -211,30 +215,44 @@ namespace TTCS_backup_restore
             }
             else
             {
-                // thá»i gian sao lÆ°u tá»‘i thiá»ƒu 3p
-                string backupDate = chonNgay.Value.ToString("yyyy-MM-dd");
-                string backupTime = chonGio.Value.ToString("HH:mm:ss");
-                var backupFullMaxPosition = dataBackupSetTable.Rows[0].Cells[3].Value;
+                // thời gian sao lưu tối thiếu 3 phút trước khi sự cố xảy ra
+                var backupFullMaxPosition = dataBackupSetTable.Rows[0].Cells[0].Value;
                 var backupLogMaxPosition = getMaxPositionBackupLog();
-                DateTime checkDay = DateTime.ParseExact(dataBackupSetTable.Rows[dataBackupSetTable.Rows.Count - 1].Cells[3].Value.ToString(), "dd-MM-yyyy HH:mm:ss", null);
-                DateTime backupDay = chonNgay.Value;
-                //nameDBTxt.Text = checkDay <= backupDay ? "YES" : "NO";
-                nameDBTxt.Text = checkDay.ToString();
-                test.Text = backupDate.ToString();
-                //query += $@"
-                //            BACKUP LOG {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH NORECOVERY
-                //            RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupFullMaxPosition}, NORECOVERY
-                //            RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupLogMaxPosition}, STOPAT = '{backupDate} {backupTime}', RECOVERY 
-                //            ALTER DATABASE {nameServerListTabcontrol.SelectedTab.Text} SET MULTI_USER";
-                //int err = DAO.execSqlNonQuery(query, DAO.connectionString);
-                //if (err == 0)
-                //{
-                //    MessageBox.Show("Phục hồi thành công");
-                //}
-                //else
-                //{
-                //    MessageBox.Show(DAO.errstr);
-                //}
+                DateTime dayTmp = DateTime.ParseExact(dataBackupSetTable.Rows[0].Cells[3].Value.ToString(), "dd-MM-yyyy HH:mm:ss", null);
+                string restoreDateStr = chonNgay.Value.ToString("dd'-'MM'-'yyyy") + ' ' + chonGio.Value.ToString("HH:mm:ss");
+                DateTime backupDate = DateTime.ParseExact(dayTmp.ToString("dd'-'MM'-'yyyy HH:mm:ss"), "dd'-'MM'-'yyyy HH:mm:ss", null);
+                DateTime restoreDate = DateTime.ParseExact(restoreDateStr, "dd'-'MM'-'yyyy HH:mm:ss", null);
+                string restoreDateParameter = restoreDate.ToString("yyyy'-'MM'-'dd HH:mm:ss");
+                nameDBTxt.Text = backupFullMaxPosition.ToString() + ' ' + backupLogMaxPosition.ToString();
+                if (checkDate(backupDate, restoreDate))
+                {
+                    query += $@"
+                                BACKUP LOG {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH NORECOVERY
+                                RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupFullMaxPosition}, NORECOVERY 
+                                RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupLogMaxPosition}, STOPAT = '{restoreDateParameter}', RECOVERY";
+                    //MessageBox.Show(query);
+                    int err = DAO.execSqlNonQuery(query, DAO.connectionString);
+                    if (err == 0)
+                    {
+                        err = DAO.execSqlNonQuery($"ALTER DATABASE {nameServerListTabcontrol.SelectedTab.Text} SET MULTI_USER", DAO.connectionString);
+                        if(err == 0)
+                        {
+                            MessageBox.Show("Phục hồi thành công");
+                        } 
+                        else
+                        {
+                            MessageBox.Show(DAO.errstr);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(DAO.errstr);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Chọn mốc thời gian phục hồi không thích hợp. Hãy chọn lại");
+                }
             }
         }
 

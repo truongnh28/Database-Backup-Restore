@@ -61,7 +61,6 @@ namespace TTCS_backup_restore
             this.backupSetTableAdapter = new TTCS_backup_restore.DSTableAdapters.backupSetTableAdapter();
             this.nameDatabaseTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.nameDatabaseTableAdapter = new TTCS_backup_restore.DSTableAdapters.nameDatabaseTableAdapter();
-            this.test = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataBackupSetTable)).BeginInit();
@@ -198,7 +197,6 @@ namespace TTCS_backup_restore
             // mainPanel
             // 
             this.mainPanel.BackColor = System.Drawing.Color.White;
-            this.mainPanel.Controls.Add(this.test);
             this.mainPanel.Controls.Add(this.label2);
             this.mainPanel.Controls.Add(this.dataBackupSetTable);
             this.mainPanel.Controls.Add(this.label1);
@@ -393,13 +391,6 @@ namespace TTCS_backup_restore
             // 
             this.nameDatabaseTableAdapter.ClearBeforeFill = true;
             // 
-            // test
-            // 
-            this.test.Location = new System.Drawing.Point(600, 15);
-            this.test.Name = "test";
-            this.test.Size = new System.Drawing.Size(308, 26);
-            this.test.TabIndex = 11;
-            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -457,6 +448,5 @@ namespace TTCS_backup_restore
         private System.Windows.Forms.DataGridViewTextBoxColumn môTảDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn thờiGianSaoLưuDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn userSaoLưuDataGridViewTextBoxColumn;
-        private System.Windows.Forms.TextBox test;
     }
 }
