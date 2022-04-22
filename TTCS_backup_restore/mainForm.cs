@@ -81,19 +81,19 @@ namespace TTCS_backup_restore
 
         private void saoLuuClicked(object sender, MouseEventArgs e)
         {
-            string query = $"BACKUP DATABASE {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_{nameServerListTabcontrol.SelectedTab.Text}";
+            string query = $@"BACKUP DATABASE {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_{nameServerListTabcontrol.SelectedTab.Text}";
             if (delAllBackupsCheckBox.Checked && MessageBox.Show("Bạn có thật sự muốn xóa các bản sao lưu cũ.", "Xác nhận", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 query += " WITH INIT"; 
             }
             int err = DAO.execSqlNonQuery(query, DAO.connectionString);
-            if (err != 0)
+            if (err == 0)
             {
-                MessageBox.Show("Backup không thành công");
+                MessageBox.Show("Backup thành công");
             }
             else
             {
-                MessageBox.Show("Backup thành công");
+                MessageBox.Show(DAO.errstr);
             }
             mainProcess();
         }
@@ -128,7 +128,7 @@ namespace TTCS_backup_restore
             taoDeviceBtn.Enabled = !haveDevice;
             saoLuuBtn.Enabled = haveDevice;
             thamSoPhucHoiBtn.Enabled = haveDevice;
-            phucHoiBtn.Enabled = thamSoPhucHoiCheckbox.Checked || (rowSelected > -1);
+            phucHoiBtn.Enabled = rowSelected > -1;
             delBackupSetItemBtn.Enabled = (rowSelected > -1);
             dataBackupSetTable.DataSource = backupSetTableAdapter.GetBackupSetTable(nameServerListTabcontrol.SelectedTab.Text);
             if (dataBackupSetTable.Rows.GetRowCount(DataGridViewElementStates.None) > 0)
@@ -144,8 +144,8 @@ namespace TTCS_backup_restore
 
         private void taoDeviceBtn_Click(object sender, EventArgs e)
         {
-            string devicePath = $"D:\\TTCS_BACKUP\\DEVICE_{nameServerListTabcontrol.SelectedTab.Text}.bak";
-            string query = $"EXEC SP_ADDUMPDEVICE 'DISK', 'DEVICE_{nameServerListTabcontrol.SelectedTab.Text}', '{devicePath}'";
+            string query = $@"EXEC SP_ADDUMPDEVICE 'DISK', 'DEVICE_TEMP_{nameServerListTabcontrol.SelectedTab.Text}', 'D:\\TTCS_BACKUP\\DEVICE_TEMP_{nameServerListTabcontrol.SelectedTab.Text}'
+                              EXEC SP_ADDUMPDEVICE 'DISK', 'DEVICE_{nameServerListTabcontrol.SelectedTab.Text}', 'D:\\TTCS_BACKUP\\DEVICE_{nameServerListTabcontrol.SelectedTab.Text}'";
             int err = DAO.execSqlNonQuery(query, DAO.connectionString);
             if(err == 0)
             {
@@ -164,30 +164,6 @@ namespace TTCS_backup_restore
             mainProcess();
         }
 
-        private string getMaxPositionBackupLog()
-        {
-            string query = $@"SELECT MAX(position)
-                            FROM msdb.dbo.backupset 
-                            WHERE database_name = '{nameServerListTabcontrol.SelectedTab.Text}' AND type = 'L' AND backup_set_id >= (
-	                            SELECT backup_set_id
-	                            FROM msdb.dbo.backupset	
-	                            WHERE database_name = '{nameServerListTabcontrol.SelectedTab.Text}' AND backup_finish_date = (
-		                            SELECT MAX(backup_finish_date)
-		                            FROM msdb.dbo.backupset
-		                            WHERE position = 1 AND database_name = '{nameServerListTabcontrol.SelectedTab.Text}'
-		                            ) 
-	                            )";
-            SqlDataReader dataReader = DAO.execSqlDataReader(query, DAO.connectionString);
-            string ans = "";
-            if(dataReader.HasRows)
-            {
-                while (dataReader.Read())
-                {
-                    ans = dataReader[0].ToString();
-                }
-            }
-            return ans;
-        }
         private bool checkDate(DateTime backupDate, DateTime restoreDate)
         {
             return backupDate <= restoreDate;
@@ -216,29 +192,27 @@ namespace TTCS_backup_restore
             else
             {
                 // thời gian sao lưu tối thiếu 3 phút trước khi sự cố xảy ra
-                var backupFullMaxPosition = dataBackupSetTable.Rows[0].Cells[0].Value;
-                var backupLogMaxPosition = getMaxPositionBackupLog();
-                DateTime dayTmp = DateTime.ParseExact(dataBackupSetTable.Rows[0].Cells[3].Value.ToString(), "dd-MM-yyyy HH:mm:ss", null);
-                string restoreDateStr = chonNgay.Value.ToString("dd'-'MM'-'yyyy") + ' ' + chonGio.Value.ToString("HH:mm:ss");
-                DateTime backupDate = DateTime.ParseExact(dayTmp.ToString("dd'-'MM'-'yyyy HH:mm:ss"), "dd'-'MM'-'yyyy HH:mm:ss", null);
-                DateTime restoreDate = DateTime.ParseExact(restoreDateStr, "dd'-'MM'-'yyyy HH:mm:ss", null);
-                string restoreDateParameter = restoreDate.ToString("yyyy'-'MM'-'dd HH:mm:ss");
-                nameDBTxt.Text = backupFullMaxPosition.ToString() + ' ' + backupLogMaxPosition.ToString();
-                if (checkDate(backupDate, restoreDate))
+                if (rowSelected > -1)
                 {
-                    query += $@"
-                                BACKUP LOG {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH NORECOVERY
-                                RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupFullMaxPosition}, NORECOVERY 
-                                RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupLogMaxPosition}, STOPAT = '{restoreDateParameter}', RECOVERY";
-                    //MessageBox.Show(query);
-                    int err = DAO.execSqlNonQuery(query, DAO.connectionString);
-                    if (err == 0)
+                    var backupFullMaxPosition = dataBackupSetTable.Rows[rowSelected].Cells[0].Value;
+                    DateTime dayTmp = DateTime.ParseExact(dataBackupSetTable.Rows[rowSelected].Cells[2].Value.ToString(), "dd-MM-yyyy HH:mm:ss", null);
+                    string restoreDateStr = chonNgay.Value.ToString("dd'-'MM'-'yyyy") + ' ' + chonGio.Value.ToString("HH:mm:ss");
+                    DateTime backupDate = DateTime.ParseExact(dayTmp.ToString("dd'-'MM'-'yyyy HH:mm:ss"), "dd'-'MM'-'yyyy HH:mm:ss", null);
+                    DateTime restoreDate = DateTime.ParseExact(restoreDateStr, "dd'-'MM'-'yyyy HH:mm:ss", null);
+                    string restoreDateParameter = restoreDate.ToString("yyyy'-'MM'-'dd HH:mm:ss");
+                    if (checkDate(backupDate, restoreDate))
                     {
-                        err = DAO.execSqlNonQuery($"ALTER DATABASE {nameServerListTabcontrol.SelectedTab.Text} SET MULTI_USER", DAO.connectionString);
-                        if(err == 0)
+
+                        query += $@"
+                                    BACKUP LOG {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_TEMP_{nameServerListTabcontrol.SelectedTab.Text} WITH INIT, NORECOVERY
+                                    RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupFullMaxPosition}, NORECOVERY 
+                                    RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_TEMP_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = 1, STOPAT = '{restoreDateParameter}', RECOVERY
+                                    ALTER DATABASE {nameServerListTabcontrol.SelectedTab.Text} SET MULTI_USER";
+                        int err = DAO.execSqlNonQuery(query, DAO.connectionString);
+                        if (err == 0)
                         {
                             MessageBox.Show("Phục hồi thành công");
-                        } 
+                        }
                         else
                         {
                             MessageBox.Show(DAO.errstr);
@@ -246,12 +220,12 @@ namespace TTCS_backup_restore
                     }
                     else
                     {
-                        MessageBox.Show(DAO.errstr);
+                        MessageBox.Show("Chọn mốc thời gian phục hồi không thích hợp. Hãy chọn lại");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Chọn mốc thời gian phục hồi không thích hợp. Hãy chọn lại");
+                    MessageBox.Show("Hãy chọn bản sao lưu!");
                 }
             }
         }
@@ -266,14 +240,40 @@ namespace TTCS_backup_restore
             }
         }
 
-        private void dataBackupSetTable_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
-        {
-            e.Column.SortMode = DataGridViewColumnSortMode.NotSortable;
-        }
-
         private void mainForm_Load(object sender, EventArgs e)
         {
-            this.nameDatabaseTableAdapter.Fill(this.dS.nameDatabaseTable);
+            //this.nameDatabaseTableAdapter.Fill(this.dS.nameDatabaseTable);
+        }
+
+        private void delBackupSetItemBtn_Click(object sender, EventArgs e)
+        {
+            if(rowSelected > -1)
+            {
+                var backupsetidPosition = backupSetTableAdapter.GetBackupSetTable(nameServerListTabcontrol.SelectedTab.Text).Rows[rowSelected]["id"];
+                string query = $@"DELETE FROM msdb.dbo.backupfile WHERE backup_set_id = '{backupsetidPosition}'
+                                  DELETE FROM msdb.dbo.backupfilegroup WHERE backup_set_id = '{backupsetidPosition}'
+                                  DELETE FROM msdb.dbo.backupset WHERE backup_set_id = '{backupsetidPosition}'";
+                //MessageBox.Show(query);
+                int err = DAO.execSqlNonQuery(query, DAO.connectionString);
+                if(err == 0)
+                {
+                    MessageBox.Show("Xóa thành công");
+                    mainProcess();
+                }
+                else
+                {
+                    MessageBox.Show(DAO.errstr);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Hãy chọn bản sao lưu!");
+            }
+        }
+
+        private void nameDBTxt_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
-}
+}   

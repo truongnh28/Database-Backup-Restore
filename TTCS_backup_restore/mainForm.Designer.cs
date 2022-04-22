@@ -30,6 +30,7 @@ namespace TTCS_backup_restore
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -46,27 +47,29 @@ namespace TTCS_backup_restore
             this.mainPanel = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.dataBackupSetTable = new System.Windows.Forms.DataGridView();
-            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.môTảDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.thờiGianSaoLưuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userSaoLưuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.môTảDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tàiKhoảnSaoLưuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.backupSetTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dS = new TTCS_backup_restore.DS();
+            this.dS1 = new TTCS_backup_restore.DS();
             this.label1 = new System.Windows.Forms.Label();
             this.chonGio = new System.Windows.Forms.DateTimePicker();
             this.nameDBTxt = new System.Windows.Forms.TextBox();
             this.chonNgay = new System.Windows.Forms.DateTimePicker();
             this.delAllBackupsCheckBox = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.dS = new TTCS_backup_restore.DS();
             this.backupSetTableAdapter = new TTCS_backup_restore.DSTableAdapters.backupSetTableAdapter();
-            this.nameDatabaseTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.nameDatabaseTableAdapter = new TTCS_backup_restore.DSTableAdapters.nameDatabaseTableAdapter();
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.môTảDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataBackupSetTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backupSetTableBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dS1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nameDatabaseTableBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -86,7 +89,7 @@ namespace TTCS_backup_restore
             // delBackupSetItemBtn
             // 
             this.delBackupSetItemBtn.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.delBackupSetItemBtn.Image = global::TTCS_backup_restore.Properties.Resources.bin_icon;
+            this.delBackupSetItemBtn.Image = ((System.Drawing.Image)(resources.GetObject("delBackupSetItemBtn.Image")));
             this.delBackupSetItemBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.delBackupSetItemBtn.Location = new System.Drawing.Point(962, -1);
             this.delBackupSetItemBtn.Name = "delBackupSetItemBtn";
@@ -95,11 +98,12 @@ namespace TTCS_backup_restore
             this.delBackupSetItemBtn.Text = "XÓA BACKUP";
             this.delBackupSetItemBtn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.delBackupSetItemBtn.UseVisualStyleBackColor = true;
+            this.delBackupSetItemBtn.Click += new System.EventHandler(this.delBackupSetItemBtn_Click);
             // 
             // thoatBtn
             // 
             this.thoatBtn.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.thoatBtn.Image = global::TTCS_backup_restore.Properties.Resources.close_icon;
+            this.thoatBtn.Image = ((System.Drawing.Image)(resources.GetObject("thoatBtn.Image")));
             this.thoatBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.thoatBtn.Location = new System.Drawing.Point(1138, 0);
             this.thoatBtn.Name = "thoatBtn";
@@ -113,7 +117,7 @@ namespace TTCS_backup_restore
             // taoDeviceBtn
             // 
             this.taoDeviceBtn.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.taoDeviceBtn.Image = global::TTCS_backup_restore.Properties.Resources.harddisk_icon;
+            this.taoDeviceBtn.Image = ((System.Drawing.Image)(resources.GetObject("taoDeviceBtn.Image")));
             this.taoDeviceBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.taoDeviceBtn.Location = new System.Drawing.Point(710, -1);
             this.taoDeviceBtn.Name = "taoDeviceBtn";
@@ -137,7 +141,7 @@ namespace TTCS_backup_restore
             // phucHoiBtn
             // 
             this.phucHoiBtn.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.phucHoiBtn.Image = global::TTCS_backup_restore.Properties.Resources.restore_icon;
+            this.phucHoiBtn.Image = ((System.Drawing.Image)(resources.GetObject("phucHoiBtn.Image")));
             this.phucHoiBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.phucHoiBtn.Location = new System.Drawing.Point(143, 0);
             this.phucHoiBtn.Name = "phucHoiBtn";
@@ -151,7 +155,7 @@ namespace TTCS_backup_restore
             // saoLuuBtn
             // 
             this.saoLuuBtn.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saoLuuBtn.Image = global::TTCS_backup_restore.Properties.Resources.backup_icon;
+            this.saoLuuBtn.Image = ((System.Drawing.Image)(resources.GetObject("saoLuuBtn.Image")));
             this.saoLuuBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saoLuuBtn.Location = new System.Drawing.Point(0, 0);
             this.saoLuuBtn.Name = "saoLuuBtn";
@@ -165,7 +169,7 @@ namespace TTCS_backup_restore
             // thamSoPhucHoiBtn
             // 
             this.thamSoPhucHoiBtn.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.thamSoPhucHoiBtn.Image = global::TTCS_backup_restore.Properties.Resources.clock_icon;
+            this.thamSoPhucHoiBtn.Image = ((System.Drawing.Image)(resources.GetObject("thamSoPhucHoiBtn.Image")));
             this.thamSoPhucHoiBtn.Location = new System.Drawing.Point(293, 0);
             this.thamSoPhucHoiBtn.Name = "thamSoPhucHoiBtn";
             this.thamSoPhucHoiBtn.Size = new System.Drawing.Size(411, 60);
@@ -213,13 +217,11 @@ namespace TTCS_backup_restore
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(127, 507);
+            this.label2.Location = new System.Drawing.Point(124, 546);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(841, 44);
             this.label2.TabIndex = 10;
-            this.label2.Text = "Hướng dẫn: Ngày giờ ta nhập vào là thời điểm ta muốn phục hồi cơ sở dữ liệu về đó" +
-    ". Thời điểm này phải sau thời điểm của bản sao lưu mà ta chọn trên lưới và trước" +
-    " thời điểm hiện tại ít nhất là 3 phút";
+            this.label2.Text = resources.GetString("label2.Text");
             // 
             // dataBackupSetTable
             // 
@@ -242,10 +244,10 @@ namespace TTCS_backup_restore
             this.dataBackupSetTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataBackupSetTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataBackupSetTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn,
-            this.môTảDataGridViewTextBoxColumn,
-            this.thờiGianSaoLưuDataGridViewTextBoxColumn,
-            this.userSaoLưuDataGridViewTextBoxColumn});
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn1,
+            this.môTảDataGridViewTextBoxColumn1,
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn1,
+            this.tàiKhoảnSaoLưuDataGridViewTextBoxColumn});
             this.dataBackupSetTable.DataSource = this.backupSetTableBindingSource;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -274,50 +276,53 @@ namespace TTCS_backup_restore
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.Window;
             this.dataBackupSetTable.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataBackupSetTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataBackupSetTable.Size = new System.Drawing.Size(956, 341);
+            this.dataBackupSetTable.Size = new System.Drawing.Size(956, 394);
             this.dataBackupSetTable.StandardTab = true;
             this.dataBackupSetTable.TabIndex = 9;
             this.dataBackupSetTable.TabStop = false;
             this.dataBackupSetTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataBackupSetTable_CellClick);
-            this.dataBackupSetTable.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataBackupSetTable_ColumnAdded);
             // 
-            // thứTựBảnSaoLưuDataGridViewTextBoxColumn
+            // thứTựBảnSaoLưuDataGridViewTextBoxColumn1
             // 
-            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn.DataPropertyName = "Thứ tự bản sao lưu";
-            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn.HeaderText = "Thứ tự bản sao lưu";
-            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn.Name = "thứTựBảnSaoLưuDataGridViewTextBoxColumn";
-            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn.ReadOnly = true;
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn1.DataPropertyName = "Thứ tự bản sao lưu";
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn1.HeaderText = "Thứ tự bản sao lưu";
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn1.Name = "thứTựBảnSaoLưuDataGridViewTextBoxColumn1";
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // môTảDataGridViewTextBoxColumn
+            // môTảDataGridViewTextBoxColumn1
             // 
-            this.môTảDataGridViewTextBoxColumn.DataPropertyName = "Mô tả";
-            this.môTảDataGridViewTextBoxColumn.HeaderText = "Mô tả";
-            this.môTảDataGridViewTextBoxColumn.Name = "môTảDataGridViewTextBoxColumn";
-            this.môTảDataGridViewTextBoxColumn.ReadOnly = true;
+            this.môTảDataGridViewTextBoxColumn1.DataPropertyName = "Mô tả";
+            this.môTảDataGridViewTextBoxColumn1.HeaderText = "Mô tả";
+            this.môTảDataGridViewTextBoxColumn1.Name = "môTảDataGridViewTextBoxColumn1";
+            this.môTảDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.môTảDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // thờiGianSaoLưuDataGridViewTextBoxColumn
+            // thờiGianSaoLưuDataGridViewTextBoxColumn1
             // 
-            this.thờiGianSaoLưuDataGridViewTextBoxColumn.DataPropertyName = "Thời gian sao lưu";
-            this.thờiGianSaoLưuDataGridViewTextBoxColumn.HeaderText = "Thời gian sao lưu";
-            this.thờiGianSaoLưuDataGridViewTextBoxColumn.Name = "thờiGianSaoLưuDataGridViewTextBoxColumn";
-            this.thờiGianSaoLưuDataGridViewTextBoxColumn.ReadOnly = true;
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn1.DataPropertyName = "Thời gian sao lưu";
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn1.HeaderText = "Thời gian sao lưu";
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn1.Name = "thờiGianSaoLưuDataGridViewTextBoxColumn1";
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // userSaoLưuDataGridViewTextBoxColumn
+            // tàiKhoảnSaoLưuDataGridViewTextBoxColumn
             // 
-            this.userSaoLưuDataGridViewTextBoxColumn.DataPropertyName = "User sao lưu";
-            this.userSaoLưuDataGridViewTextBoxColumn.HeaderText = "User sao lưu";
-            this.userSaoLưuDataGridViewTextBoxColumn.Name = "userSaoLưuDataGridViewTextBoxColumn";
-            this.userSaoLưuDataGridViewTextBoxColumn.ReadOnly = true;
+            this.tàiKhoảnSaoLưuDataGridViewTextBoxColumn.DataPropertyName = "Tài khoản sao lưu";
+            this.tàiKhoảnSaoLưuDataGridViewTextBoxColumn.HeaderText = "Tài khoản sao lưu";
+            this.tàiKhoảnSaoLưuDataGridViewTextBoxColumn.Name = "tàiKhoảnSaoLưuDataGridViewTextBoxColumn";
+            this.tàiKhoảnSaoLưuDataGridViewTextBoxColumn.ReadOnly = true;
+            this.tàiKhoảnSaoLưuDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // backupSetTableBindingSource
             // 
             this.backupSetTableBindingSource.DataMember = "backupSetTable";
-            this.backupSetTableBindingSource.DataSource = this.dS;
+            this.backupSetTableBindingSource.DataSource = this.dS1;
             // 
-            // dS
+            // dS1
             // 
-            this.dS.DataSetName = "DS";
-            this.dS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.dS1.DataSetName = "DS";
+            this.dS1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // label1
             // 
@@ -332,7 +337,7 @@ namespace TTCS_backup_restore
             // 
             this.chonGio.CustomFormat = "HH:mm:ss";
             this.chonGio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.chonGio.Location = new System.Drawing.Point(692, 435);
+            this.chonGio.Location = new System.Drawing.Point(689, 499);
             this.chonGio.MaxDate = new System.DateTime(2200, 4, 16, 0, 0, 0, 0);
             this.chonGio.Name = "chonGio";
             this.chonGio.ShowUpDown = true;
@@ -346,12 +351,13 @@ namespace TTCS_backup_restore
             this.nameDBTxt.Name = "nameDBTxt";
             this.nameDBTxt.Size = new System.Drawing.Size(308, 26);
             this.nameDBTxt.TabIndex = 1;
+            this.nameDBTxt.TextChanged += new System.EventHandler(this.nameDBTxt_TextChanged);
             // 
             // chonNgay
             // 
             this.chonNgay.CustomFormat = "dd-MM-yyyy";
             this.chonNgay.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.chonNgay.Location = new System.Drawing.Point(476, 436);
+            this.chonNgay.Location = new System.Drawing.Point(468, 499);
             this.chonNgay.MaxDate = new System.DateTime(2029, 12, 31, 0, 0, 0, 0);
             this.chonNgay.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.chonNgay.Name = "chonNgay";
@@ -362,7 +368,7 @@ namespace TTCS_backup_restore
             // delAllBackupsCheckBox
             // 
             this.delAllBackupsCheckBox.AutoSize = true;
-            this.delAllBackupsCheckBox.Location = new System.Drawing.Point(304, 365);
+            this.delAllBackupsCheckBox.Location = new System.Drawing.Point(298, 457);
             this.delAllBackupsCheckBox.Name = "delAllBackupsCheckBox";
             this.delAllBackupsCheckBox.Size = new System.Drawing.Size(497, 23);
             this.delAllBackupsCheckBox.TabIndex = 3;
@@ -372,24 +378,41 @@ namespace TTCS_backup_restore
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(85, 442);
+            this.label3.Location = new System.Drawing.Point(85, 506);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(295, 19);
             this.label3.TabIndex = 4;
             this.label3.Text = "Ngày giờ để phục hồi tới thời điểm đó";
             // 
+            // dS
+            // 
+            this.dS.DataSetName = "DS";
+            this.dS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // backupSetTableAdapter
             // 
             this.backupSetTableAdapter.ClearBeforeFill = true;
             // 
-            // nameDatabaseTableBindingSource
+            // thứTựBảnSaoLưuDataGridViewTextBoxColumn
             // 
-            this.nameDatabaseTableBindingSource.DataMember = "nameDatabaseTable";
-            this.nameDatabaseTableBindingSource.DataSource = this.dS;
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn.DataPropertyName = "Thứ tự bản sao lưu";
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn.HeaderText = "Thứ tự bản sao lưu";
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn.Name = "thứTựBảnSaoLưuDataGridViewTextBoxColumn";
+            this.thứTựBảnSaoLưuDataGridViewTextBoxColumn.Width = 318;
             // 
-            // nameDatabaseTableAdapter
+            // môTảDataGridViewTextBoxColumn
             // 
-            this.nameDatabaseTableAdapter.ClearBeforeFill = true;
+            this.môTảDataGridViewTextBoxColumn.DataPropertyName = "Mô tả";
+            this.môTảDataGridViewTextBoxColumn.HeaderText = "Mô tả";
+            this.môTảDataGridViewTextBoxColumn.Name = "môTảDataGridViewTextBoxColumn";
+            this.môTảDataGridViewTextBoxColumn.Width = 317;
+            // 
+            // thờiGianSaoLưuDataGridViewTextBoxColumn
+            // 
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn.DataPropertyName = "Thời gian sao lưu";
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn.HeaderText = "Thời gian sao lưu";
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn.Name = "thờiGianSaoLưuDataGridViewTextBoxColumn";
+            this.thờiGianSaoLưuDataGridViewTextBoxColumn.Width = 318;
             // 
             // mainForm
             // 
@@ -408,8 +431,8 @@ namespace TTCS_backup_restore
             this.mainPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataBackupSetTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.backupSetTableBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dS1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nameDatabaseTableBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -439,14 +462,17 @@ namespace TTCS_backup_restore
         private System.Windows.Forms.DataGridViewTextBoxColumn backupstartdateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn usernameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn databasenameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource backupSetTableBindingSource;
         private DS dS;
         private DSTableAdapters.backupSetTableAdapter backupSetTableAdapter;
-        private System.Windows.Forms.BindingSource nameDatabaseTableBindingSource;
-        private DSTableAdapters.nameDatabaseTableAdapter nameDatabaseTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userSaoLưuDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn thứTựBảnSaoLưuDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn môTảDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn thờiGianSaoLưuDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn userSaoLưuDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource backupSetTableBindingSource;
+        private DS dS1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn thứTựBảnSaoLưuDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn môTảDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn thờiGianSaoLưuDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tàiKhoảnSaoLưuDataGridViewTextBoxColumn;
     }
 }
