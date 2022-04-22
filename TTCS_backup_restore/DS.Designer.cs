@@ -351,13 +351,13 @@ namespace TTCS_backup_restore {
             
             private global::System.Data.DataColumn columnThứ_tự_bản_sao_lưu;
             
-            private global::System.Data.DataColumn columnMô_tả;
-            
             private global::System.Data.DataColumn columnTài_khoản_sao_lưu;
             
             private global::System.Data.DataColumn columnid;
             
             private global::System.Data.DataColumn columnThời_gian_sao_lưu;
+            
+            private global::System.Data.DataColumn columnMô_tả;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -402,14 +402,6 @@ namespace TTCS_backup_restore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Mô_tảColumn {
-                get {
-                    return this.columnMô_tả;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public global::System.Data.DataColumn Tài_khoản_sao_lưuColumn {
                 get {
                     return this.columnTài_khoản_sao_lưu;
@@ -429,6 +421,14 @@ namespace TTCS_backup_restore {
             public global::System.Data.DataColumn Thời_gian_sao_lưuColumn {
                 get {
                     return this.columnThời_gian_sao_lưu;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Mô_tảColumn {
+                get {
+                    return this.columnMô_tả;
                 }
             }
             
@@ -469,14 +469,14 @@ namespace TTCS_backup_restore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public backupSetTableRow AddbackupSetTableRow(int Thứ_tự_bản_sao_lưu, string Mô_tả, string Tài_khoản_sao_lưu, string Thời_gian_sao_lưu) {
+            public backupSetTableRow AddbackupSetTableRow(int Thứ_tự_bản_sao_lưu, string Tài_khoản_sao_lưu, string Thời_gian_sao_lưu, string Mô_tả) {
                 backupSetTableRow rowbackupSetTableRow = ((backupSetTableRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Thứ_tự_bản_sao_lưu,
-                        Mô_tả,
                         Tài_khoản_sao_lưu,
                         null,
-                        Thời_gian_sao_lưu};
+                        Thời_gian_sao_lưu,
+                        Mô_tả};
                 rowbackupSetTableRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowbackupSetTableRow);
                 return rowbackupSetTableRow;
@@ -507,10 +507,10 @@ namespace TTCS_backup_restore {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             internal void InitVars() {
                 this.columnThứ_tự_bản_sao_lưu = base.Columns["Thứ tự bản sao lưu"];
-                this.columnMô_tả = base.Columns["Mô tả"];
                 this.columnTài_khoản_sao_lưu = base.Columns["Tài khoản sao lưu"];
                 this.columnid = base.Columns["id"];
                 this.columnThời_gian_sao_lưu = base.Columns["Thời gian sao lưu"];
+                this.columnMô_tả = base.Columns["Mô tả"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -518,21 +518,18 @@ namespace TTCS_backup_restore {
             private void InitClass() {
                 this.columnThứ_tự_bản_sao_lưu = new global::System.Data.DataColumn("Thứ tự bản sao lưu", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnThứ_tự_bản_sao_lưu);
-                this.columnMô_tả = new global::System.Data.DataColumn("Mô tả", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnMô_tả);
                 this.columnTài_khoản_sao_lưu = new global::System.Data.DataColumn("Tài khoản sao lưu", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTài_khoản_sao_lưu);
                 this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnid);
                 this.columnThời_gian_sao_lưu = new global::System.Data.DataColumn("Thời gian sao lưu", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnThời_gian_sao_lưu);
+                this.columnMô_tả = new global::System.Data.DataColumn("Mô tả", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMô_tả);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnThứ_tự_bản_sao_lưu.ReadOnly = true;
                 this.columnThứ_tự_bản_sao_lưu.Caption = "position";
-                this.columnMô_tả.ReadOnly = true;
-                this.columnMô_tả.Caption = "name";
-                this.columnMô_tả.MaxLength = 128;
                 this.columnTài_khoản_sao_lưu.ReadOnly = true;
                 this.columnTài_khoản_sao_lưu.Caption = "user_name";
                 this.columnTài_khoản_sao_lưu.MaxLength = 128;
@@ -544,6 +541,8 @@ namespace TTCS_backup_restore {
                 this.columnThời_gian_sao_lưu.ReadOnly = true;
                 this.columnThời_gian_sao_lưu.Caption = "time";
                 this.columnThời_gian_sao_lưu.MaxLength = 4000;
+                this.columnMô_tả.Caption = "description";
+                this.columnMô_tả.MaxLength = 255;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1200,22 +1199,6 @@ namespace TTCS_backup_restore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Mô_tả {
-                get {
-                    try {
-                        return ((string)(this[this.tablebackupSetTable.Mô_tảColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Mô tả\' in table \'backupSetTable\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablebackupSetTable.Mô_tảColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string Tài_khoản_sao_lưu {
                 get {
                     try {
@@ -1259,6 +1242,22 @@ namespace TTCS_backup_restore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Mô_tả {
+                get {
+                    try {
+                        return ((string)(this[this.tablebackupSetTable.Mô_tảColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Mô tả\' in table \'backupSetTable\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackupSetTable.Mô_tảColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsThứ_tự_bản_sao_lưuNull() {
                 return this.IsNull(this.tablebackupSetTable.Thứ_tự_bản_sao_lưuColumn);
             }
@@ -1267,18 +1266,6 @@ namespace TTCS_backup_restore {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetThứ_tự_bản_sao_lưuNull() {
                 this[this.tablebackupSetTable.Thứ_tự_bản_sao_lưuColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsMô_tảNull() {
-                return this.IsNull(this.tablebackupSetTable.Mô_tảColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetMô_tảNull() {
-                this[this.tablebackupSetTable.Mô_tảColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1303,6 +1290,18 @@ namespace TTCS_backup_restore {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetThời_gian_sao_lưuNull() {
                 this[this.tablebackupSetTable.Thời_gian_sao_lưuColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsMô_tảNull() {
+                return this.IsNull(this.tablebackupSetTable.Mô_tảColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetMô_tảNull() {
+                this[this.tablebackupSetTable.Mô_tảColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1586,10 +1585,10 @@ namespace TTCS_backup_restore.DSTableAdapters {
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "backupSetTable";
             tableMapping.ColumnMappings.Add("position", "Thứ tự bản sao lưu");
-            tableMapping.ColumnMappings.Add("name", "Mô tả");
             tableMapping.ColumnMappings.Add("user_name", "Tài khoản sao lưu");
             tableMapping.ColumnMappings.Add("backup_set_id", "id");
             tableMapping.ColumnMappings.Add("time", "Thời gian sao lưu");
+            tableMapping.ColumnMappings.Add("description", "Mô tả");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1606,7 +1605,7 @@ namespace TTCS_backup_restore.DSTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT position, backup_set_id, name, FORMAT(CONVERT(DATETIME, backup_finish_date, 108),'dd-MM-yyyy HH:mm:ss','en-us') AS 'time', user_name 
+            this._commandCollection[0].CommandText = @"SELECT position, backup_set_id, description, FORMAT(CONVERT(DATETIME, backup_finish_date, 108),'dd-MM-yyyy HH:mm:ss','en-us') AS 'time', user_name 
 FROM msdb.dbo.backupset 
 WHERE database_name = @db_name AND type = 'D' AND backup_set_id >= (
 	SELECT backup_set_id

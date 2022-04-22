@@ -55,13 +55,10 @@ namespace TTCS_backup_restore
         {
             Graphics g = e.Graphics;
             Brush _textBrush;
-            // Get the item from the collection.
             TabPage _tabPage = nameServerListTabcontrol.TabPages[e.Index];
-            // Get the real bounds for the tab rectangle.
             Rectangle _tabBounds = nameServerListTabcontrol.GetTabRect(e.Index);
             if (e.State == DrawItemState.Selected)
             {
-                // Draw a different background color, and don't paint a focus rectangle.
                 _textBrush = new System.Drawing.SolidBrush(e.ForeColor);
                 g.FillRectangle(Brushes.Gray, e.Bounds);
             }
@@ -70,9 +67,7 @@ namespace TTCS_backup_restore
                 _textBrush = new System.Drawing.SolidBrush(e.ForeColor);
                 e.DrawBackground();
             }
-            // Use our own font.
             Font _tabFont = new Font("Arial", (float)12.0, FontStyle.Bold);
-            // Draw string. Center the text.
             StringFormat _stringFlags = new StringFormat();
             _stringFlags.Alignment = StringAlignment.Center;
             _stringFlags.LineAlignment = StringAlignment.Center;
@@ -81,10 +76,17 @@ namespace TTCS_backup_restore
 
         private void saoLuuClicked(object sender, MouseEventArgs e)
         {
+            string descriptionStr = ""; 
+            Exten.ShowInputDialogBox(ref descriptionStr, "Hãy nhập vào mô tả của bản backup (không dấu)", "Mô tả", 410, 120);
+            //nameDBTxt.Text = descriptionStr;
             string query = $@"BACKUP DATABASE {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_{nameServerListTabcontrol.SelectedTab.Text}";
             if (delAllBackupsCheckBox.Checked && MessageBox.Show("Bạn có thật sự muốn xóa các bản sao lưu cũ.", "Xác nhận", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                query += " WITH INIT"; 
+                query += $@" WITH INIT, DESCRIPTION = '{descriptionStr}'";
+            }
+            else
+            {
+                query += $@" WITH DESCRIPTION = '{descriptionStr}'";
             }
             int err = DAO.execSqlNonQuery(query, DAO.connectionString);
             if (err == 0)
@@ -153,7 +155,7 @@ namespace TTCS_backup_restore
             }
             else
             {
-                MessageBox.Show("Tạo Device không thành công");
+                MessageBox.Show(DAO.errstr);
             }
             mainProcess();
         }
@@ -186,12 +188,12 @@ namespace TTCS_backup_restore
                 }
                 else
                 {
-                    MessageBox.Show("Phục hồi không thành công");
+                    MessageBox.Show(DAO.errstr);
                 }
             }
             else
             {
-                // thời gian sao lưu tối thiếu 3 phút trước khi sự cố xảy ra
+                // thời gian sao lưu tối thiếu 3 phút sau khi backup và 1 phút trước khi sự cố xảy ra
                 if (rowSelected > -1)
                 {
                     var backupFullMaxPosition = dataBackupSetTable.Rows[rowSelected].Cells[0].Value;
@@ -202,7 +204,6 @@ namespace TTCS_backup_restore
                     string restoreDateParameter = restoreDate.ToString("yyyy'-'MM'-'dd HH:mm:ss");
                     if (checkDate(backupDate, restoreDate))
                     {
-
                         query += $@"
                                     BACKUP LOG {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_TEMP_{nameServerListTabcontrol.SelectedTab.Text} WITH INIT, NORECOVERY
                                     RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupFullMaxPosition}, NORECOVERY 
@@ -269,11 +270,6 @@ namespace TTCS_backup_restore
             {
                 MessageBox.Show("Hãy chọn bản sao lưu!");
             }
-        }
-
-        private void nameDBTxt_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }   

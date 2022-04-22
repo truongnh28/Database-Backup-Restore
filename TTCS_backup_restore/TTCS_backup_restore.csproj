@@ -62,6 +62,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Exten.cs" />
     <Compile Include="loginForm.cs">
       <SubType>Form</SubType>
     </Compile>

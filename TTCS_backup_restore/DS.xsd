@@ -12,7 +12,7 @@
               <DbSource ConnectionRef="tempdbConnectionString (Settings)" DbObjectName="msdb.dbo.backupset" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetBackupSetTable" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetBackupSetTable" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetBackupSetTable" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT position, backup_set_id, name, FORMAT(CONVERT(DATETIME, backup_finish_date, 108),'dd-MM-yyyy HH:mm:ss','en-us') AS 'time', user_name 
+                    <CommandText>SELECT position, backup_set_id, description, FORMAT(CONVERT(DATETIME, backup_finish_date, 108),'dd-MM-yyyy HH:mm:ss','en-us') AS 'time', user_name 
 FROM msdb.dbo.backupset 
 WHERE database_name = @db_name AND type = 'D' AND backup_set_id &gt;= (
 	SELECT backup_set_id
@@ -33,10 +33,10 @@ ORDER BY position DESC</CommandText>
             </MainSource>
             <Mappings>
               <Mapping SourceColumn="position" DataSetColumn="Thứ tự bản sao lưu" />
-              <Mapping SourceColumn="name" DataSetColumn="Mô tả" />
               <Mapping SourceColumn="user_name" DataSetColumn="Tài khoản sao lưu" />
               <Mapping SourceColumn="backup_set_id" DataSetColumn="id" />
               <Mapping SourceColumn="time" DataSetColumn="Thời gian sao lưu" />
+              <Mapping SourceColumn="description" DataSetColumn="Mô tả" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -84,17 +84,10 @@ FROM sys.sysdevices</CommandText>
   <xs:element name="DS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DS" msprop:Generator_UserDSName="DS">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="backupSetTable" msprop:Generator_TableClassName="backupSetTableDataTable" msprop:Generator_TableVarName="tablebackupSetTable" msprop:Generator_TablePropName="backupSetTable" msprop:Generator_RowDeletingName="backupSetTableRowDeleting" msprop:Generator_RowChangingName="backupSetTableRowChanging" msprop:Generator_RowEvHandlerName="backupSetTableRowChangeEventHandler" msprop:Generator_RowDeletedName="backupSetTableRowDeleted" msprop:Generator_UserTableName="backupSetTable" msprop:Generator_RowChangedName="backupSetTableRowChanged" msprop:Generator_RowEvArgName="backupSetTableRowChangeEvent" msprop:Generator_RowClassName="backupSetTableRow">
+        <xs:element name="backupSetTable" msprop:Generator_TableClassName="backupSetTableDataTable" msprop:Generator_TableVarName="tablebackupSetTable" msprop:Generator_RowChangedName="backupSetTableRowChanged" msprop:Generator_TablePropName="backupSetTable" msprop:Generator_RowDeletingName="backupSetTableRowDeleting" msprop:Generator_RowChangingName="backupSetTableRowChanging" msprop:Generator_RowEvHandlerName="backupSetTableRowChangeEventHandler" msprop:Generator_RowDeletedName="backupSetTableRowDeleted" msprop:Generator_RowClassName="backupSetTableRow" msprop:Generator_UserTableName="backupSetTable" msprop:Generator_RowEvArgName="backupSetTableRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Thứ_x0020_tự_x0020_bản_x0020_sao_x0020_lưu" msdata:ReadOnly="true" msdata:Caption="position" msprop:Generator_ColumnVarNameInTable="columnThứ_tự_bản_sao_lưu" msprop:Generator_ColumnPropNameInRow="Thứ_tự_bản_sao_lưu" msprop:Generator_ColumnPropNameInTable="Thứ_tự_bản_sao_lưuColumn" msprop:Generator_UserColumnName="Thứ tự bản sao lưu" type="xs:int" minOccurs="0" />
-              <xs:element name="Mô_x0020_tả" msdata:ReadOnly="true" msdata:Caption="name" msprop:Generator_ColumnVarNameInTable="columnMô_tả" msprop:Generator_ColumnPropNameInRow="Mô_tả" msprop:Generator_ColumnPropNameInTable="Mô_tảColumn" msprop:Generator_UserColumnName="Mô tả" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="128" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
               <xs:element name="Tài_x0020_khoản_x0020_sao_x0020_lưu" msdata:ReadOnly="true" msdata:Caption="user_name" msprop:Generator_ColumnVarNameInTable="columnTài_khoản_sao_lưu" msprop:Generator_ColumnPropNameInRow="Tài_khoản_sao_lưu" msprop:Generator_ColumnPropNameInTable="Tài_khoản_sao_lưuColumn" msprop:Generator_UserColumnName="Tài khoản sao lưu" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -110,10 +103,17 @@ FROM sys.sysdevices</CommandText>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="Mô_x0020_tả" msdata:Caption="description" msprop:Generator_ColumnVarNameInTable="columnMô_tả" msprop:Generator_ColumnPropNameInRow="Mô_tả" msprop:Generator_ColumnPropNameInTable="Mô_tảColumn" msprop:Generator_UserColumnName="Mô tả" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="deviceTable" msprop:Generator_TableClassName="deviceTableDataTable" msprop:Generator_TableVarName="tabledeviceTable" msprop:Generator_TablePropName="deviceTable" msprop:Generator_RowDeletingName="deviceTableRowDeleting" msprop:Generator_RowChangingName="deviceTableRowChanging" msprop:Generator_RowEvHandlerName="deviceTableRowChangeEventHandler" msprop:Generator_RowDeletedName="deviceTableRowDeleted" msprop:Generator_UserTableName="deviceTable" msprop:Generator_RowChangedName="deviceTableRowChanged" msprop:Generator_RowEvArgName="deviceTableRowChangeEvent" msprop:Generator_RowClassName="deviceTableRow">
+        <xs:element name="deviceTable" msprop:Generator_TableClassName="deviceTableDataTable" msprop:Generator_TableVarName="tabledeviceTable" msprop:Generator_RowChangedName="deviceTableRowChanged" msprop:Generator_TablePropName="deviceTable" msprop:Generator_RowDeletingName="deviceTableRowDeleting" msprop:Generator_RowChangingName="deviceTableRowChanging" msprop:Generator_RowEvHandlerName="deviceTableRowChangeEventHandler" msprop:Generator_RowDeletedName="deviceTableRowDeleted" msprop:Generator_RowClassName="deviceTableRow" msprop:Generator_UserTableName="deviceTable" msprop:Generator_RowEvArgName="deviceTableRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name">
@@ -126,7 +126,7 @@ FROM sys.sysdevices</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="nameDatabaseTable" msprop:Generator_TableClassName="nameDatabaseTableDataTable" msprop:Generator_TableVarName="tablenameDatabaseTable" msprop:Generator_TablePropName="nameDatabaseTable" msprop:Generator_RowDeletingName="nameDatabaseTableRowDeleting" msprop:Generator_RowChangingName="nameDatabaseTableRowChanging" msprop:Generator_RowEvHandlerName="nameDatabaseTableRowChangeEventHandler" msprop:Generator_RowDeletedName="nameDatabaseTableRowDeleted" msprop:Generator_UserTableName="nameDatabaseTable" msprop:Generator_RowChangedName="nameDatabaseTableRowChanged" msprop:Generator_RowEvArgName="nameDatabaseTableRowChangeEvent" msprop:Generator_RowClassName="nameDatabaseTableRow">
+        <xs:element name="nameDatabaseTable" msprop:Generator_TableClassName="nameDatabaseTableDataTable" msprop:Generator_TableVarName="tablenameDatabaseTable" msprop:Generator_RowChangedName="nameDatabaseTableRowChanged" msprop:Generator_TablePropName="nameDatabaseTable" msprop:Generator_RowDeletingName="nameDatabaseTableRowDeleting" msprop:Generator_RowChangingName="nameDatabaseTableRowChanging" msprop:Generator_RowEvHandlerName="nameDatabaseTableRowChangeEventHandler" msprop:Generator_RowDeletedName="nameDatabaseTableRowDeleted" msprop:Generator_RowClassName="nameDatabaseTableRow" msprop:Generator_UserTableName="nameDatabaseTable" msprop:Generator_RowEvArgName="nameDatabaseTableRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name">
