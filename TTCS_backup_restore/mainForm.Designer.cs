@@ -31,10 +31,10 @@ namespace TTCS_backup_restore
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.delBackupSetItemBtn = new System.Windows.Forms.Button();
             this.thoatBtn = new System.Windows.Forms.Button();
@@ -64,12 +64,14 @@ namespace TTCS_backup_restore
             this.thứTựBảnSaoLưuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.môTảDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.thờiGianSaoLưuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chooseTimePanel = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataBackupSetTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backupSetTableBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS)).BeginInit();
+            this.chooseTimePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -201,14 +203,11 @@ namespace TTCS_backup_restore
             // mainPanel
             // 
             this.mainPanel.BackColor = System.Drawing.Color.White;
-            this.mainPanel.Controls.Add(this.label2);
+            this.mainPanel.Controls.Add(this.chooseTimePanel);
             this.mainPanel.Controls.Add(this.dataBackupSetTable);
             this.mainPanel.Controls.Add(this.label1);
-            this.mainPanel.Controls.Add(this.chonGio);
             this.mainPanel.Controls.Add(this.nameDBTxt);
-            this.mainPanel.Controls.Add(this.chonNgay);
             this.mainPanel.Controls.Add(this.delAllBackupsCheckBox);
-            this.mainPanel.Controls.Add(this.label3);
             this.mainPanel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mainPanel.Location = new System.Drawing.Point(216, 66);
             this.mainPanel.Name = "mainPanel";
@@ -217,7 +216,7 @@ namespace TTCS_backup_restore
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(124, 546);
+            this.label2.Location = new System.Drawing.Point(44, 70);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(841, 44);
             this.label2.TabIndex = 10;
@@ -234,14 +233,14 @@ namespace TTCS_backup_restore
             this.dataBackupSetTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataBackupSetTable.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataBackupSetTable.BackgroundColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataBackupSetTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataBackupSetTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataBackupSetTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataBackupSetTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.thứTựBảnSaoLưuDataGridViewTextBoxColumn1,
@@ -249,32 +248,32 @@ namespace TTCS_backup_restore
             this.thờiGianSaoLưuDataGridViewTextBoxColumn1,
             this.tàiKhoảnSaoLưuDataGridViewTextBoxColumn});
             this.dataBackupSetTable.DataSource = this.backupSetTableBindingSource;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.MenuHighlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataBackupSetTable.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataBackupSetTable.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataBackupSetTable.EnableHeadersVisualStyles = false;
             this.dataBackupSetTable.Location = new System.Drawing.Point(50, 57);
             this.dataBackupSetTable.MultiSelect = false;
             this.dataBackupSetTable.Name = "dataBackupSetTable";
             this.dataBackupSetTable.ReadOnly = true;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataBackupSetTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataBackupSetTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataBackupSetTable.RowHeadersVisible = false;
             this.dataBackupSetTable.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.Window;
-            this.dataBackupSetTable.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.Window;
+            this.dataBackupSetTable.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataBackupSetTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataBackupSetTable.Size = new System.Drawing.Size(956, 394);
             this.dataBackupSetTable.StandardTab = true;
@@ -337,7 +336,7 @@ namespace TTCS_backup_restore
             // 
             this.chonGio.CustomFormat = "HH:mm:ss";
             this.chonGio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.chonGio.Location = new System.Drawing.Point(689, 499);
+            this.chonGio.Location = new System.Drawing.Point(646, 18);
             this.chonGio.MaxDate = new System.DateTime(2200, 4, 16, 0, 0, 0, 0);
             this.chonGio.Name = "chonGio";
             this.chonGio.ShowUpDown = true;
@@ -356,7 +355,7 @@ namespace TTCS_backup_restore
             // 
             this.chonNgay.CustomFormat = "dd-MM-yyyy";
             this.chonNgay.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.chonNgay.Location = new System.Drawing.Point(468, 499);
+            this.chonNgay.Location = new System.Drawing.Point(429, 18);
             this.chonNgay.MaxDate = new System.DateTime(2029, 12, 31, 0, 0, 0, 0);
             this.chonNgay.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.chonNgay.Name = "chonNgay";
@@ -377,7 +376,7 @@ namespace TTCS_backup_restore
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(85, 506);
+            this.label3.Location = new System.Drawing.Point(44, 24);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(295, 19);
             this.label3.TabIndex = 4;
@@ -413,6 +412,17 @@ namespace TTCS_backup_restore
             this.thờiGianSaoLưuDataGridViewTextBoxColumn.Name = "thờiGianSaoLưuDataGridViewTextBoxColumn";
             this.thờiGianSaoLưuDataGridViewTextBoxColumn.Width = 318;
             // 
+            // chooseTimePanel
+            // 
+            this.chooseTimePanel.Controls.Add(this.label3);
+            this.chooseTimePanel.Controls.Add(this.label2);
+            this.chooseTimePanel.Controls.Add(this.chonNgay);
+            this.chooseTimePanel.Controls.Add(this.chonGio);
+            this.chooseTimePanel.Location = new System.Drawing.Point(50, 486);
+            this.chooseTimePanel.Name = "chooseTimePanel";
+            this.chooseTimePanel.Size = new System.Drawing.Size(956, 139);
+            this.chooseTimePanel.TabIndex = 11;
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -432,6 +442,8 @@ namespace TTCS_backup_restore
             ((System.ComponentModel.ISupportInitialize)(this.backupSetTableBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS)).EndInit();
+            this.chooseTimePanel.ResumeLayout(false);
+            this.chooseTimePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -473,5 +485,6 @@ namespace TTCS_backup_restore
         private System.Windows.Forms.DataGridViewTextBoxColumn môTảDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn thờiGianSaoLưuDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn tàiKhoảnSaoLưuDataGridViewTextBoxColumn;
+        private System.Windows.Forms.Panel chooseTimePanel;
     }
 }

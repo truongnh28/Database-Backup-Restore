@@ -67,5 +67,18 @@ namespace TTCS_backup_restore
             //After input has been submitted, return the input value
             return result;
         }
+        public static string ConvertVN(string chucodau)
+        {
+            const string FindText = "áàảãạâấầẩẫậăắằẳẵặđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵÁÀẢÃẠÂẤẦẨẪẬĂẮẰẲẴẶĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴ";
+            const string ReplText = "aaaaaaaaaaaaaaaaadeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyAAAAAAAAAAAAAAAAADEEEEEEEEEEEIIIIIOOOOOOOOOOOOOOOOOUUUUUUUUUUUYYYYY";
+            int index = -1;
+            char[] arrChar = FindText.ToCharArray();
+            while ((index = chucodau.IndexOfAny(arrChar)) != -1)
+            {
+                int index2 = FindText.IndexOf(chucodau[index]);
+                chucodau = chucodau.Replace(chucodau[index], ReplText[index2]);
+            }
+            return chucodau;
+        }
     }
 }

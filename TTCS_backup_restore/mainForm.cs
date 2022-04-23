@@ -24,8 +24,10 @@ namespace TTCS_backup_restore
             tabPageTest();
             chonGio.Value = DateTime.Today;
             chonNgay.Value = DateTime.Today;
+            chooseTimePanel.Visible = false;
             nameServerListTabcontrol.SelectedIndexChanged += new EventHandler(Tabs_SelectedIndexChanged);
         }
+
         public static ArrayList GetDatabaseNames()
         {
             string query = "SELECT name FROM sys.databases WHERE(database_id >= 5) AND(NOT(name LIKE N'ReportServer%')) ORDER BY NAME";
@@ -77,18 +79,21 @@ namespace TTCS_backup_restore
         private void saoLuuClicked(object sender, MouseEventArgs e)
         {
             string descriptionStr = ""; 
-            Exten.ShowInputDialogBox(ref descriptionStr, "Hãy nhập vào mô tả của bản backup (không dấu)", "Mô tả", 410, 120);
-            //nameDBTxt.Text = descriptionStr;
             string query = $@"BACKUP DATABASE {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_{nameServerListTabcontrol.SelectedTab.Text}";
             if (delAllBackupsCheckBox.Checked && MessageBox.Show("Bạn có thật sự muốn xóa các bản sao lưu cũ.", "Xác nhận", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
+                Exten.ShowInputDialogBox(ref descriptionStr, "Hãy nhập vào mô tả của bản backup (không dấu)", "Mô tả", 410, 120);
+                descriptionStr = Exten.ConvertVN(descriptionStr);
                 query += $@" WITH INIT, DESCRIPTION = '{descriptionStr}'";
             }
             else
             {
+                Exten.ShowInputDialogBox(ref descriptionStr, "Hãy nhập vào mô tả của bản backup (không dấu)", "Mô tả", 410, 120);
+                descriptionStr = Exten.ConvertVN(descriptionStr);
                 query += $@" WITH DESCRIPTION = '{descriptionStr}'";
             }
             int err = DAO.execSqlNonQuery(query, DAO.connectionString);
+            delAllBackupsCheckBox.Checked = false;
             if (err == 0)
             {
                 MessageBox.Show("Backup thành công");
@@ -140,7 +145,7 @@ namespace TTCS_backup_restore
         }
 
         private void cancelBtnClicked(object sender, EventArgs e)
-        { 
+        {
             Application.Exit();
         }
 
@@ -163,6 +168,7 @@ namespace TTCS_backup_restore
         private void thamSoPhucHoiBtn_Click(object sender, EventArgs e)
         {
             thamSoPhucHoiCheckbox.Checked = !thamSoPhucHoiCheckbox.Checked;
+            chooseTimePanel.Visible = thamSoPhucHoiCheckbox.Checked;
             mainProcess();
         }
 
@@ -250,20 +256,27 @@ namespace TTCS_backup_restore
         {
             if(rowSelected > -1)
             {
-                var backupsetidPosition = backupSetTableAdapter.GetBackupSetTable(nameServerListTabcontrol.SelectedTab.Text).Rows[rowSelected]["id"];
-                string query = $@"DELETE FROM msdb.dbo.backupfile WHERE backup_set_id = '{backupsetidPosition}'
-                                  DELETE FROM msdb.dbo.backupfilegroup WHERE backup_set_id = '{backupsetidPosition}'
-                                  DELETE FROM msdb.dbo.backupset WHERE backup_set_id = '{backupsetidPosition}'";
-                //MessageBox.Show(query);
-                int err = DAO.execSqlNonQuery(query, DAO.connectionString);
-                if(err == 0)
+                if(rowSelected == dataBackupSetTable.Rows.Count - 1)
                 {
-                    MessageBox.Show("Xóa thành công");
-                    mainProcess();
-                }
+                    MessageBox.Show("Không thể xóa bản backup gốc");
+                } 
                 else
                 {
-                    MessageBox.Show(DAO.errstr);
+                    var backupsetidPosition = backupSetTableAdapter.GetBackupSetTable(nameServerListTabcontrol.SelectedTab.Text).Rows[rowSelected]["id"];
+                    string query = $@"DELETE FROM msdb.dbo.backupfile WHERE backup_set_id = '{backupsetidPosition}'
+                                      DELETE FROM msdb.dbo.backupfilegroup WHERE backup_set_id = '{backupsetidPosition}'
+                                      DELETE FROM msdb.dbo.backupset WHERE backup_set_id = '{backupsetidPosition}'";
+                    //MessageBox.Show(query);
+                    int err = DAO.execSqlNonQuery(query, DAO.connectionString);
+                    if(err == 0)
+                    {
+                        MessageBox.Show("Xóa thành công");
+                        mainProcess();
+                    }
+                    else
+                    {
+                        MessageBox.Show(DAO.errstr);
+                    }
                 }
             }
             else
