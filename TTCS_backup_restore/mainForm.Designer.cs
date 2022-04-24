@@ -45,7 +45,11 @@ namespace TTCS_backup_restore
             this.thamSoPhucHoiBtn = new System.Windows.Forms.Button();
             this.nameServerListTabcontrol = new System.Windows.Forms.TabControl();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.chooseTimePanel = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.chonNgay = new System.Windows.Forms.DateTimePicker();
+            this.chonGio = new System.Windows.Forms.DateTimePicker();
             this.dataBackupSetTable = new System.Windows.Forms.DataGridView();
             this.thứTựBảnSaoLưuDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.môTảDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,24 +58,20 @@ namespace TTCS_backup_restore
             this.backupSetTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dS1 = new TTCS_backup_restore.DS();
             this.label1 = new System.Windows.Forms.Label();
-            this.chonGio = new System.Windows.Forms.DateTimePicker();
             this.nameDBTxt = new System.Windows.Forms.TextBox();
-            this.chonNgay = new System.Windows.Forms.DateTimePicker();
             this.delAllBackupsCheckBox = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.dS = new TTCS_backup_restore.DS();
             this.backupSetTableAdapter = new TTCS_backup_restore.DSTableAdapters.backupSetTableAdapter();
             this.thứTựBảnSaoLưuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.môTảDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.thờiGianSaoLưuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chooseTimePanel = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.mainPanel.SuspendLayout();
+            this.chooseTimePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataBackupSetTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backupSetTableBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS)).BeginInit();
-            this.chooseTimePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -214,6 +214,26 @@ namespace TTCS_backup_restore
             this.mainPanel.Size = new System.Drawing.Size(1064, 642);
             this.mainPanel.TabIndex = 10;
             // 
+            // chooseTimePanel
+            // 
+            this.chooseTimePanel.Controls.Add(this.label3);
+            this.chooseTimePanel.Controls.Add(this.label2);
+            this.chooseTimePanel.Controls.Add(this.chonNgay);
+            this.chooseTimePanel.Controls.Add(this.chonGio);
+            this.chooseTimePanel.Location = new System.Drawing.Point(50, 486);
+            this.chooseTimePanel.Name = "chooseTimePanel";
+            this.chooseTimePanel.Size = new System.Drawing.Size(956, 139);
+            this.chooseTimePanel.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(44, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(295, 19);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Ngày giờ để phục hồi tới thời điểm đó";
+            // 
             // label2
             // 
             this.label2.Location = new System.Drawing.Point(44, 70);
@@ -221,6 +241,30 @@ namespace TTCS_backup_restore
             this.label2.Size = new System.Drawing.Size(841, 44);
             this.label2.TabIndex = 10;
             this.label2.Text = resources.GetString("label2.Text");
+            // 
+            // chonNgay
+            // 
+            this.chonNgay.CustomFormat = "dd-MM-yyyy";
+            this.chonNgay.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.chonNgay.Location = new System.Drawing.Point(429, 18);
+            this.chonNgay.MaxDate = new System.DateTime(2029, 12, 31, 0, 0, 0, 0);
+            this.chonNgay.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.chonNgay.Name = "chonNgay";
+            this.chonNgay.Size = new System.Drawing.Size(121, 26);
+            this.chonNgay.TabIndex = 5;
+            this.chonNgay.Value = new System.DateTime(2022, 4, 17, 0, 0, 0, 0);
+            // 
+            // chonGio
+            // 
+            this.chonGio.CustomFormat = "HH:mm:ss";
+            this.chonGio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.chonGio.Location = new System.Drawing.Point(646, 18);
+            this.chonGio.MaxDate = new System.DateTime(2200, 4, 16, 0, 0, 0, 0);
+            this.chonGio.Name = "chonGio";
+            this.chonGio.ShowUpDown = true;
+            this.chonGio.Size = new System.Drawing.Size(126, 26);
+            this.chonGio.TabIndex = 6;
+            this.chonGio.Value = new System.DateTime(2022, 4, 19, 0, 0, 0, 0);
             // 
             // dataBackupSetTable
             // 
@@ -332,36 +376,12 @@ namespace TTCS_backup_restore
             this.label1.TabIndex = 0;
             this.label1.Text = "Tên cơ sở dữ liệu";
             // 
-            // chonGio
-            // 
-            this.chonGio.CustomFormat = "HH:mm:ss";
-            this.chonGio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.chonGio.Location = new System.Drawing.Point(646, 18);
-            this.chonGio.MaxDate = new System.DateTime(2200, 4, 16, 0, 0, 0, 0);
-            this.chonGio.Name = "chonGio";
-            this.chonGio.ShowUpDown = true;
-            this.chonGio.Size = new System.Drawing.Size(126, 26);
-            this.chonGio.TabIndex = 6;
-            this.chonGio.Value = new System.DateTime(2022, 4, 19, 0, 0, 0, 0);
-            // 
             // nameDBTxt
             // 
             this.nameDBTxt.Location = new System.Drawing.Point(236, 15);
             this.nameDBTxt.Name = "nameDBTxt";
             this.nameDBTxt.Size = new System.Drawing.Size(308, 26);
             this.nameDBTxt.TabIndex = 1;
-            // 
-            // chonNgay
-            // 
-            this.chonNgay.CustomFormat = "dd-MM-yyyy";
-            this.chonNgay.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.chonNgay.Location = new System.Drawing.Point(429, 18);
-            this.chonNgay.MaxDate = new System.DateTime(2029, 12, 31, 0, 0, 0, 0);
-            this.chonNgay.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
-            this.chonNgay.Name = "chonNgay";
-            this.chonNgay.Size = new System.Drawing.Size(121, 26);
-            this.chonNgay.TabIndex = 5;
-            this.chonNgay.Value = new System.DateTime(2022, 4, 17, 0, 0, 0, 0);
             // 
             // delAllBackupsCheckBox
             // 
@@ -372,15 +392,6 @@ namespace TTCS_backup_restore
             this.delAllBackupsCheckBox.TabIndex = 3;
             this.delAllBackupsCheckBox.Text = "Xóa tất cả các bản sao lưu trong file trước khi tạo sao lưu mới";
             this.delAllBackupsCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(44, 24);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(295, 19);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Ngày giờ để phục hồi tới thời điểm đó";
             // 
             // dS
             // 
@@ -412,17 +423,6 @@ namespace TTCS_backup_restore
             this.thờiGianSaoLưuDataGridViewTextBoxColumn.Name = "thờiGianSaoLưuDataGridViewTextBoxColumn";
             this.thờiGianSaoLưuDataGridViewTextBoxColumn.Width = 318;
             // 
-            // chooseTimePanel
-            // 
-            this.chooseTimePanel.Controls.Add(this.label3);
-            this.chooseTimePanel.Controls.Add(this.label2);
-            this.chooseTimePanel.Controls.Add(this.chonNgay);
-            this.chooseTimePanel.Controls.Add(this.chonGio);
-            this.chooseTimePanel.Location = new System.Drawing.Point(50, 486);
-            this.chooseTimePanel.Name = "chooseTimePanel";
-            this.chooseTimePanel.Size = new System.Drawing.Size(956, 139);
-            this.chooseTimePanel.TabIndex = 11;
-            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -438,12 +438,12 @@ namespace TTCS_backup_restore
             this.panel1.PerformLayout();
             this.mainPanel.ResumeLayout(false);
             this.mainPanel.PerformLayout();
+            this.chooseTimePanel.ResumeLayout(false);
+            this.chooseTimePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataBackupSetTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.backupSetTableBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS)).EndInit();
-            this.chooseTimePanel.ResumeLayout(false);
-            this.chooseTimePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }

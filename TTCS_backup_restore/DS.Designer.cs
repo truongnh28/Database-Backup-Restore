@@ -1607,7 +1607,7 @@ namespace TTCS_backup_restore.DSTableAdapters {
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"SELECT position, backup_set_id, description, FORMAT(CONVERT(DATETIME, backup_finish_date, 108),'dd-MM-yyyy HH:mm:ss','en-us') AS 'time', user_name 
 FROM msdb.dbo.backupset 
-WHERE database_name = @db_name AND type = 'D' AND backup_set_id >= (
+WHERE database_name = @db_name AND type = 'D' AND position >= 1 AND backup_set_id >= (
 	SELECT backup_set_id
 	FROM msdb.dbo.backupset	
 	WHERE database_name = @db_name AND type = 'D' AND backup_finish_date = (
