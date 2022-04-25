@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace TTCS_backup_restore
 {
     public static class Exten
     {
+        public static BackgroundWorker worker = new BackgroundWorker();
         public static DialogResult ShowInputDialogBox(ref string input, string prompt, string title = "Title", int width = 200, int height = 100)
         {
             //This function creates the custom input dialog box by individually creating the different window elements and adding them to the dialog box
