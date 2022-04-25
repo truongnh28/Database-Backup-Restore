@@ -84,15 +84,13 @@ namespace TTCS_backup_restore
             string query = $@"BACKUP DATABASE {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_{nameServerListTabcontrol.SelectedTab.Text}";
             if (delAllBackupsCheckBox.Checked && MessageBox.Show("Bạn có thật sự muốn xóa các bản sao lưu cũ.", "Xác nhận", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                Exten.ShowInputDialogBox(ref descriptionStr, "Hãy nhập vào mô tả của bản sao lưu (không dấu)", "Mô tả", 410, 120);
-                descriptionStr = Exten.ConvertVN(descriptionStr);
-                query += $@" WITH INIT, DESCRIPTION = '{descriptionStr}'";
+                Exten.ShowInputDialogBox(ref descriptionStr, "Hãy nhập vào mô tả của bản sao lưu", "Mô tả", 410, 120);
+                query += $@" WITH INIT, DESCRIPTION = N'{descriptionStr}'";
             }
             else
             {
-                Exten.ShowInputDialogBox(ref descriptionStr, "Hãy nhập vào mô tả của bản sao lưu (không dấu)", "Mô tả", 410, 120);
-                descriptionStr = Exten.ConvertVN(descriptionStr);
-                query += $@" WITH DESCRIPTION = '{descriptionStr}'";
+                Exten.ShowInputDialogBox(ref descriptionStr, "Hãy nhập vào mô tả của bản sao lưu", "Mô tả", 410, 120);
+                query += $@" WITH DESCRIPTION = N'{descriptionStr}'";
             }
             int err = DAO.execSqlNonQuery(query, DAO.connectionString);
             delAllBackupsCheckBox.Checked = false;
@@ -215,10 +213,10 @@ namespace TTCS_backup_restore
                 {
                     query += $@"
                                 BACKUP LOG {nameServerListTabcontrol.SelectedTab.Text} TO DEVICE_LOG WITH INIT, NORECOVERY
-                                RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupFullMaxPosition}, NORECOVERY
-                                RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupFullMaxPosition}, REPLACE
+                                RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_{nameServerListTabcontrol.SelectedTab.Text} WITH FILE = {backupFullMaxPosition}, NORECOVERY, REPLACE
                                 RESTORE DATABASE {nameServerListTabcontrol.SelectedTab.Text} FROM DEVICE_LOG WITH FILE = 1, STOPAT = '{restoreDateParameter}', RECOVERY
                                 ALTER DATABASE {nameServerListTabcontrol.SelectedTab.Text} SET MULTI_USER";
+                    //MessageBox.Show(query);
                     int err = DAO.execSqlNonQuery(query, DAO.connectionString);
                     if (err == 0)
                     {
